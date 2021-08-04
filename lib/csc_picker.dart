@@ -531,6 +531,7 @@ class CSCPicker extends StatefulWidget {
   final double? searchBarRadius;
   final double? dropdownDialogRadius;
   final double? height;
+  final TextStyle? textStyle;
   final DefaultCountry? defaultCountry;
 
   ///CSC Picker Constructor
@@ -551,6 +552,7 @@ class CSCPicker extends StatefulWidget {
     this.showStates = true,
     this.showCities = true,
     this.height,
+    this.textStyle,
     this.defaultCountry,
     this.currentCountry,
     this.currentState,
@@ -829,14 +831,51 @@ class _CSCPickerState extends State<CSCPicker> {
         widget.layout == Layout.vertical
             ? Column(
                 mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
+                  Text(
+                    "Country",
+                    style: widget.textStyle ??
+                        TextStyle(
+                          fontSize: 14,
+                          fontWeight: FontWeight.w600,
+                          color: Color.fromRGBO(27, 28, 30, 1),
+                        ),
+                  ),
+                  SizedBox(
+                    height: 10.0,
+                  ),
                   countryDropdown(),
                   SizedBox(
                     height: 20.0,
                   ),
+                  Text(
+                    "State",
+                    style: widget.textStyle ??
+                        TextStyle(
+                          fontSize: 14,
+                          fontWeight: FontWeight.w600,
+                          color: Color.fromRGBO(27, 28, 30, 1),
+                        ),
+                  ),
+                  SizedBox(
+                    height: 10.0,
+                  ),
                   stateDropdown(),
                   SizedBox(
                     height: 20.0,
+                  ),
+                  Text(
+                    "City",
+                    style: widget.textStyle ??
+                        TextStyle(
+                          fontSize: 14,
+                          fontWeight: FontWeight.w600,
+                          color: Color.fromRGBO(27, 28, 30, 1),
+                        ),
+                  ),
+                  SizedBox(
+                    height: 10.0,
                   ),
                   cityDropdown()
                 ],
