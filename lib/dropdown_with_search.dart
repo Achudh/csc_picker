@@ -5,6 +5,7 @@ class DropdownWithSearch<T> extends StatelessWidget {
   final String placeHolder;
   final T selected;
   final List items;
+  final Icon? icon;
   final EdgeInsets? selectedItemPadding;
   final TextStyle? selectedItemStyle;
   final TextStyle? dropdownHeadingStyle;
@@ -25,6 +26,7 @@ class DropdownWithSearch<T> extends StatelessWidget {
     required this.selected,
     required this.onChanged,
     this.selectedItemPadding,
+    this.icon,
     this.selectedItemStyle,
     this.dropdownHeadingStyle,
     this.itemStyle,
@@ -105,7 +107,7 @@ class DropdownWithSearch<T> extends StatelessWidget {
                         ),
                 ),
               ),
-              Icon(Icons.keyboard_arrow_down_rounded),
+              icon != null ? icon! : Icon(Icons.keyboard_arrow_down_rounded),
             ],
           ),
         ),

@@ -72,6 +72,8 @@ class _MyHomePageState extends State<MyHomePage> {
                     width: 1,
                   ),
                 ),
+                showTitles: false,
+                icon: Icon(Icons.arrow_drop_down_outlined),
 
                 ///Disabled Dropdown box decoration to style your dropdown selector [OPTIONAL PARAMETER]  (USE with disabled dropdownDecoration)
                 disabledDropdownDecoration: BoxDecoration(

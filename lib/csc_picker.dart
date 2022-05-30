@@ -7,7 +7,9 @@ import 'package:flutter/material.dart';
 import 'model/select_status_model.dart';
 
 enum Layout { vertical, horizontal }
+
 enum CountryFlag { SHOW_IN_DROP_DOWN_ONLY, ENABLE, DISABLE }
+
 enum DefaultCountry {
   Afghanistan,
   Aland_Islands,
@@ -260,6 +262,7 @@ enum DefaultCountry {
   Curacao,
   Sint_Maarten_Dutch_part
 }
+
 const Map<DefaultCountry, int> DefaultCountries = {
   DefaultCountry.Afghanistan: 0,
   DefaultCountry.Aland_Islands: 1,
@@ -526,6 +529,8 @@ class CSCPicker extends StatefulWidget {
   final TextStyle? selectedItemStyle, dropdownHeadingStyle, dropdownItemStyle;
   final BoxDecoration? dropdownDecoration, disabledDropdownDecoration;
   final bool showStates, showCities;
+  final bool showTitles;
+  final Icon? icon;
   final CountryFlag flagState;
   final Layout layout;
   final double? searchBarRadius;
@@ -551,6 +556,8 @@ class CSCPicker extends StatefulWidget {
     this.layout = Layout.vertical,
     this.showStates = true,
     this.showCities = true,
+    this.showTitles = true,
+    this.icon,
     this.height,
     this.textStyle,
     this.defaultCountry,
@@ -833,50 +840,56 @@ class _CSCPickerState extends State<CSCPicker> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
-                  Text(
-                    "Country",
-                    style: widget.textStyle ??
-                        TextStyle(
-                          fontSize: 14,
-                          fontWeight: FontWeight.w600,
-                          color: Color.fromRGBO(27, 28, 30, 1),
-                        ),
-                  ),
-                  SizedBox(
-                    height: 10.0,
-                  ),
+                  if (widget.showTitles)
+                    Text(
+                      "Country",
+                      style: widget.textStyle ??
+                          TextStyle(
+                            fontSize: 14,
+                            fontWeight: FontWeight.w600,
+                            color: Color.fromRGBO(27, 28, 30, 1),
+                          ),
+                    ),
+                  if (widget.showTitles)
+                    SizedBox(
+                      height: 10.0,
+                    ),
                   countryDropdown(),
                   SizedBox(
                     height: 20.0,
                   ),
-                  Text(
-                    "State",
-                    style: widget.textStyle ??
-                        TextStyle(
-                          fontSize: 14,
-                          fontWeight: FontWeight.w600,
-                          color: Color.fromRGBO(27, 28, 30, 1),
-                        ),
-                  ),
-                  SizedBox(
-                    height: 10.0,
-                  ),
+                  if (widget.showTitles)
+                    Text(
+                      "State",
+                      style: widget.textStyle ??
+                          TextStyle(
+                            fontSize: 14,
+                            fontWeight: FontWeight.w600,
+                            color: Color.fromRGBO(27, 28, 30, 1),
+                          ),
+                    ),
+                  if (widget.showTitles)
+                    SizedBox(
+                      height: 10.0,
+                    ),
                   stateDropdown(),
                   SizedBox(
                     height: 20.0,
                   ),
-                  Text(
-                    "City",
-                    style: widget.textStyle ??
-                        TextStyle(
-                          fontSize: 14,
-                          fontWeight: FontWeight.w600,
-                          color: Color.fromRGBO(27, 28, 30, 1),
-                        ),
-                  ),
-                  SizedBox(
-                    height: 10.0,
-                  ),
+                  if (widget.showTitles)
+                    Text(
+                      "City",
+                      style: widget.textStyle ??
+                          TextStyle(
+                            fontSize: 14,
+                            fontWeight: FontWeight.w600,
+                            color: Color.fromRGBO(27, 28, 30, 1),
+                          ),
+                    ),
+                  if (widget.showTitles)
+                    SizedBox(
+                      height: 10.0,
+                    ),
                   cityDropdown()
                 ],
               )
@@ -944,6 +957,7 @@ class _CSCPickerState extends State<CSCPicker> {
       disabled: _country.length == 0 ? true : false,
       dialogRadius: widget.dropdownDialogRadius,
       searchBarRadius: widget.searchBarRadius,
+      icon: widget.icon,
       height: widget.height,
       items: _country.map((String? dropDownStringItem) {
         return dropDownStringItem;
@@ -973,6 +987,7 @@ class _CSCPickerState extends State<CSCPicker> {
       dropdownHeadingStyle: widget.dropdownHeadingStyle,
       itemStyle: widget.dropdownItemStyle,
       height: widget.height,
+      icon: widget.icon,
       decoration: widget.dropdownDecoration,
       dialogRadius: widget.dropdownDialogRadius,
       searchBarRadius: widget.searchBarRadius,
@@ -999,6 +1014,7 @@ class _CSCPickerState extends State<CSCPicker> {
       dropdownHeadingStyle: widget.dropdownHeadingStyle,
       itemStyle: widget.dropdownItemStyle,
       height: widget.height,
+      icon: widget.icon,
       decoration: widget.dropdownDecoration,
       dialogRadius: widget.dropdownDialogRadius,
       searchBarRadius: widget.searchBarRadius,
