@@ -529,6 +529,7 @@ class CSCPicker extends StatefulWidget {
   final TextStyle? selectedItemStyle, dropdownHeadingStyle, dropdownItemStyle;
   final BoxDecoration? dropdownDecoration, disabledDropdownDecoration;
   final bool showStates, showCities;
+  final Color? popUpBgColor;
   final bool showTitles;
   final Icon? icon;
   final CountryFlag flagState;
@@ -549,6 +550,7 @@ class CSCPicker extends StatefulWidget {
     this.dropdownHeadingStyle,
     this.dropdownItemStyle,
     this.dropdownDecoration,
+    this.popUpBgColor,
     this.disabledDropdownDecoration,
     this.searchBarRadius,
     this.dropdownDialogRadius,
@@ -955,7 +957,7 @@ class _CSCPickerState extends State<CSCPicker> {
       decoration: widget.dropdownDecoration,
       disabledDecoration: widget.disabledDropdownDecoration,
       disabled: _country.length == 0 ? true : false,
-      dialogRadius: widget.dropdownDialogRadius,
+      dialogRadius: widget.dropdownDialogRadius, popUpBgColor: widget.popUpBgColor ?? Colors.white,
       searchBarRadius: widget.searchBarRadius,
       icon: widget.icon,
       height: widget.height,
@@ -986,7 +988,7 @@ class _CSCPickerState extends State<CSCPicker> {
       selectedItemStyle: widget.selectedItemStyle,
       dropdownHeadingStyle: widget.dropdownHeadingStyle,
       itemStyle: widget.dropdownItemStyle,
-      height: widget.height,
+      height: widget.height, popUpBgColor: widget.popUpBgColor ?? Colors.white,
       icon: widget.icon,
       decoration: widget.dropdownDecoration,
       dialogRadius: widget.dropdownDialogRadius,
@@ -1015,6 +1017,7 @@ class _CSCPickerState extends State<CSCPicker> {
       itemStyle: widget.dropdownItemStyle,
       height: widget.height,
       icon: widget.icon,
+      popUpBgColor: widget.popUpBgColor ?? Colors.white,
       decoration: widget.dropdownDecoration,
       dialogRadius: widget.dropdownDialogRadius,
       searchBarRadius: widget.searchBarRadius,

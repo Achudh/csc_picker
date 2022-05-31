@@ -15,6 +15,7 @@ class DropdownWithSearch<T> extends StatelessWidget {
   final double? dialogRadius;
   final double? height;
   final bool disabled;
+  final Color popUpBgColor;
 
   final Function onChanged;
 
@@ -25,6 +26,7 @@ class DropdownWithSearch<T> extends StatelessWidget {
     required this.items,
     required this.selected,
     required this.onChanged,
+   required this.popUpBgColor,
     this.selectedItemPadding,
     this.icon,
     this.selectedItemStyle,
@@ -51,6 +53,7 @@ class DropdownWithSearch<T> extends StatelessWidget {
                   title: title,
                   searchInputRadius: searchBarRadius,
                   dialogRadius: dialogRadius,
+                  popUpBgColor: popUpBgColor,
                   titleStyle: dropdownHeadingStyle,
                   itemStyle: itemStyle,
                   items: items)).then((value) {
@@ -120,6 +123,7 @@ class SearchDialog extends StatefulWidget {
   final String title;
   final String placeHolder;
   final List items;
+  final Color popUpBgColor;
   final TextStyle? titleStyle;
   final TextStyle? itemStyle;
   final double? searchInputRadius;
@@ -131,6 +135,7 @@ class SearchDialog extends StatefulWidget {
       required this.title,
       required this.placeHolder,
       required this.items,
+      required this.popUpBgColor,
       this.titleStyle,
       this.searchInputRadius,
       this.dialogRadius,
@@ -173,93 +178,96 @@ class _SearchDialogState<T> extends State<SearchDialog> {
           RoundedRectangleBorder(borderRadius: widget.dialogRadius != null ? BorderRadius.circular(widget.dialogRadius!) : BorderRadius.circular(14)),
       child: ClipRRect(
         borderRadius: BorderRadius.circular(12.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Container(
-                  margin: EdgeInsets.symmetric(horizontal: 16),
-                  child: Text(
-                    widget.title,
-                    style: widget.titleStyle != null ? widget.titleStyle : TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
-                  ),
-                ),
-                IconButton(
-                    icon: Icon(Icons.close),
-                    onPressed: () {
-                      FocusScope.of(context).unfocus();
-                      Navigator.pop(context);
-                    })
-                /*Align(
-                alignment: Alignment.centerRight,
-                child: TextButton(
-                    onPressed: () {
-                      FocusScope.of(context).unfocus();
-                      Navigator.pop(context);
-                    },
+        child: Container(
+          decoration: BoxDecoration(color: widget.popUpBgColor),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Container(
+                    margin: EdgeInsets.symmetric(horizontal: 16),
                     child: Text(
-                      'Close',
-                      style: widget.titleStyle != null
-                          ? widget.titleStyle
-                          : TextStyle(fontSize: 14, fontWeight: FontWeight.w500),
-                    )),
-              )*/
-              ],
-            ),
-            SizedBox(height: 5),
-            Container(
-              margin: EdgeInsets.symmetric(horizontal: 16),
-              child: TextField(
-                autofocus: true,
-                decoration: InputDecoration(
-                  isDense: true,
-                  prefixIcon: Icon(Icons.search),
-                  hintText: widget.placeHolder,
-                  focusedBorder: OutlineInputBorder(
-                    borderRadius:
-                        BorderRadius.all(widget.searchInputRadius != null ? Radius.circular(widget.searchInputRadius!) : Radius.circular(5)),
-                    borderSide: const BorderSide(
-                      color: Colors.black26,
+                      widget.title,
+                      style: widget.titleStyle != null ? widget.titleStyle : TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
                     ),
                   ),
-                  enabledBorder: OutlineInputBorder(
-                    borderRadius:
-                        BorderRadius.all(widget.searchInputRadius != null ? Radius.circular(widget.searchInputRadius!) : Radius.circular(5)),
-                    borderSide: const BorderSide(color: Colors.black12),
+                  IconButton(
+                      icon: Icon(Icons.close),
+                      onPressed: () {
+                        FocusScope.of(context).unfocus();
+                        Navigator.pop(context);
+                      })
+                  /*Align(
+                  alignment: Alignment.centerRight,
+                  child: TextButton(
+                      onPressed: () {
+                        FocusScope.of(context).unfocus();
+                        Navigator.pop(context);
+                      },
+                      child: Text(
+                        'Close',
+                        style: widget.titleStyle != null
+                            ? widget.titleStyle
+                            : TextStyle(fontSize: 14, fontWeight: FontWeight.w500),
+                      )),
+                )*/
+                ],
+              ),
+              SizedBox(height: 5),
+              Container(
+                margin: EdgeInsets.symmetric(horizontal: 16),
+                child: TextField(
+                  autofocus: true,
+                  decoration: InputDecoration(
+                    isDense: true,
+                    prefixIcon: Icon(Icons.search),
+                    hintText: widget.placeHolder,
+                    focusedBorder: OutlineInputBorder(
+                      borderRadius:
+                          BorderRadius.all(widget.searchInputRadius != null ? Radius.circular(widget.searchInputRadius!) : Radius.circular(5)),
+                      borderSide: const BorderSide(
+                        color: Colors.black26,
+                      ),
+                    ),
+                    enabledBorder: OutlineInputBorder(
+                      borderRadius:
+                          BorderRadius.all(widget.searchInputRadius != null ? Radius.circular(widget.searchInputRadius!) : Radius.circular(5)),
+                      borderSide: const BorderSide(color: Colors.black12),
+                    ),
+                  ),
+                  style: widget.itemStyle != null ? widget.itemStyle : TextStyle(fontSize: 14),
+                  controller: textController,
+                ),
+              ),
+              SizedBox(height: 5),
+              Expanded(
+                child: ClipRRect(
+                  borderRadius: BorderRadius.all(widget.dialogRadius != null ? Radius.circular(widget.dialogRadius!) : Radius.circular(5)),
+                  //borderRadius: widget.dialogRadius!=null?BorderRadius.circular(widget.dropDownRadius!):BorderRadius.circular(14),
+                  child: ListView.builder(
+                    itemCount: filteredList.length,
+                    itemBuilder: (context, index) {
+                      return InkWell(
+                        onTap: () {
+                          FocusScope.of(context).unfocus();
+                          Navigator.pop(context, filteredList[index]);
+                        },
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 18),
+                          child: Text(
+                            filteredList[index].toString(),
+                            style: widget.itemStyle != null ? widget.itemStyle : TextStyle(fontSize: 14),
+                          ),
+                        ),
+                      );
+                    },
                   ),
                 ),
-                style: widget.itemStyle != null ? widget.itemStyle : TextStyle(fontSize: 14),
-                controller: textController,
               ),
-            ),
-            SizedBox(height: 5),
-            Expanded(
-              child: ClipRRect(
-                borderRadius: BorderRadius.all(widget.dialogRadius != null ? Radius.circular(widget.dialogRadius!) : Radius.circular(5)),
-                //borderRadius: widget.dialogRadius!=null?BorderRadius.circular(widget.dropDownRadius!):BorderRadius.circular(14),
-                child: ListView.builder(
-                  itemCount: filteredList.length,
-                  itemBuilder: (context, index) {
-                    return InkWell(
-                      onTap: () {
-                        FocusScope.of(context).unfocus();
-                        Navigator.pop(context, filteredList[index]);
-                      },
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 18),
-                        child: Text(
-                          filteredList[index].toString(),
-                          style: widget.itemStyle != null ? widget.itemStyle : TextStyle(fontSize: 14),
-                        ),
-                      ),
-                    );
-                  },
-                ),
-              ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
@@ -311,7 +319,7 @@ class CustomDialog extends StatelessWidget {
   }
 
   // TODO(johnsonmh): Update default dialog border radius to 4.0 to match material spec.
-  static const RoundedRectangleBorder _defaultDialogShape = RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(2.0)));
+  static const RoundedRectangleBorder _defaultDialogShape = RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(4.0)));
 
   @override
   Widget build(BuildContext context) {
